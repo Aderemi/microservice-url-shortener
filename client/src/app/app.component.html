@@ -1,0 +1,47 @@
+<simple-notifications [options] = "options"></simple-notifications>
+<ngx-spinner
+  bdColor = "rgba(51, 51, 51, 0.8)"
+  size = "default"
+  color = "#fff"
+  type = "line-spin-clockwise-fade-rotating"
+>
+</ngx-spinner>
+<nav class="navbar navbar-expand navbar-dark  justify-content-between px-2" style="background-color: #03335e;">
+  <a href="/home" class="navbar-brand">URL Shortener</a>
+  <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+    <li class="nav-item">
+      <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+    </li>
+    <li class="nav-item">
+      <a href="/login" class="nav-link" routerLink="login">Login</a>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+    <li class="nav-item">
+      <a href="/board" class="nav-link" routerLink="board">{{ username }} URLs</a>
+    </li>
+    <li class="nav-item">
+      <a href class="nav-link" (click)="logout()">LogOut</a>
+    </li>
+  </ul>
+</nav>
+<h1 class="title "><strong>URL Shortener</strong></h1>
+<hr/>
+<p>Type or Paste your URL below to get custom Short URL.</p>
+<div class="container-fluid custom-container center-block">
+  <div class="row">
+    <div class="col-12 card-center">
+      <div class="custom-card card w-50">
+        <div class="card-block">
+          <!-- <form>  -->
+          <router-outlet></router-outlet>
+          <div *ngIf="!isLoggedIn">
+            <p class="card-text" >Kindly login or register to generated your cool short urls</p>
+          </div>
+          <!-- </form> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

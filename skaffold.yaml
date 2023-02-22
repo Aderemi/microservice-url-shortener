@@ -1,0 +1,66 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s
+build:
+  local:
+    push: false
+  artifacts:
+    - image: dayo/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: dayo/url-management
+      context: url-management-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.java'
+            dest: .
+    - image: dayo/url-management-db
+      context: url-management-service/database
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.sql'
+            dest: .
+    - image: dayo/url-redirect
+      context: url-redirect-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.java'
+            dest: .
+    - image: dayo/url-redirect-db
+      context: url-redirect-service/database
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.sql'
+            dest: .
+    - image: dayo/event-bus-zookeeper
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile.zookeeper
+      sync:
+        manual:
+          - src: '*.java'
+            dest: .
+    - image: dayo/event-bus-kafka
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile.kafka
+      sync:
+        manual:
+          - src: '*.java'
+            dest: .

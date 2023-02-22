@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-management-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: url-management
+  template:
+    metadata:
+      labels:
+        app: url-management
+    spec:
+      containers:
+        - name: url-management-java
+          image: dayo/url-management
+        - name: url-management-db
+          image: dayo/url-management-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: url-management-srv
+spec:
+  selector:
+    app: url-management
+  ports:
+    - name: url-management
+      protocol: TCP
+      port: 8090
+      targetPort: 8090
+    - name: url-management-db
+      protocol: TCP
+      port: 3306
+      targetPort: 3306

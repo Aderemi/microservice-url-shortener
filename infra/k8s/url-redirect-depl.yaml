@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-redirect-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: url-redirect
+  template:
+    metadata:
+      labels:
+        app: url-redirect
+    spec:
+      containers:
+        - name: url-redirect-java
+          image: dayo/url-redirect
+        - name: url-redirect-db
+          image: dayo/url-redirect-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: url-redirect-srv
+spec:
+  selector:
+    app: url-redirect
+  ports:
+    - name: url-redirect
+      protocol: TCP
+      port: 8091
+      targetPort: 8091
+    - name: url-redirect-db
+      protocol: TCP
+      port: 3307
+      targetPort: 3306
+

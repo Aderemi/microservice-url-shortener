@@ -1,0 +1,26 @@
+<div *ngIf="isLoggedIn">
+  <div class="container" style="padding: 15px">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control col-sm-12"
+        [(ngModel)] = "originalUrl"
+        placeholder="e.g. google.com"
+        aria-label="URL"
+        pattern="^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/$"
+        aria-describedby="basic-addon2" autofocus>
+      <div class="input-group-append bg-primary">
+        <button type="submit" (click)="getShortenedUrl();" class="input-group-text bg-primary text-white btn " id="basic-addon2">Shorten</button>
+      </div>
+    </div>
+  </div>
+  <p class="card-text" >Your URLs <a target="_blank" href={{shortenedUrl}}>{{shortenedUrl}}</a></p>
+  <div style="margin: 5px" *ngFor="let url of content">
+    <div class="alert alert-primary alert-dismissible fade show p-1" role="alert">
+      <strong style="padding-right: 10px; color: black; font-weight: bolder">{{url.realUrl}}</strong> http://localhost:8091/{{url.fakeUrl}}
+      <a class="close" style="display: none">
+        <span>&times;</span>
+      </a>
+    </div>
+  </div>
+</div>
